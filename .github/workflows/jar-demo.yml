@@ -17,4 +17,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Find the JAR file and run it
-        run: java -jar jar/*.jar 
+        run: java -jar jar/arxmldiff.jar 
