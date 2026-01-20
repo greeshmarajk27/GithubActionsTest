@@ -1,0 +1,115 @@
+
+name: ARXML diff with PCM repo ad local (main/files)
+
+on:
+  workflow_dispatch:
+    inputs:
+      # ARXML path in THIS repo (main)
+      this_arxml_path:
+        description: 'Path to ARXML in THIS repo (e.g., inputFiles/ECUConfig_v1.arxml)'
+        required: true
+      # ARXML path in PCM repo (main) - if unknown, leave empty to auto-detect first *.arxml in files/
+      pcm_arxml_path:
+        description: 'Path to ARXML in PCM repo (e.g., files/ecu.arxml). Leave empty to auto-detect.'
+        required: false
+        default: ''
+      output_html:
+        description: 'Output HTML filename'
+        required: false
+        default: 'arxml_diff.html'
+      retention_days:
+        description: 'Artifact retention days'
+        required: false
+        default: '3'
+
+permissions:
+  contents: read
+
+jobs:
+  arxml-comp:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Checkout THIS repo (default branch on manual run → main)
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2) Checkout PCM repository @ main into subfolder
+      - name: Checkout PCM repository (main)
+        uses: actions/checkout@v4
+        with:
+          repository: CICD-LTTS/PCM
+          ref: main
+          path: pcm_repo
+          token: ${{ secrets.REPO_READ_TOKEN || github.token }}
+          fetch-depth: 1
+
+      # 3) Python setup
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # 4) Install deps (if present)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      # 5) Run diff (auto-detect PCM path if not provided)
+      - name: Run ARXML diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p diff-reports
+
+          THIS_ARXML="${{ inputs.this_arxml_path }}"
+          PCM_INPUT="${{ inputs.pcm_arxml_path }}"
+          OUT_HTML="diff-reports/${{ inputs.output_html }}"
+
+          # Resolve PCM ARXML path
+          if [ -n "$PCM_INPUT" ]; then
+            PCM_ARXML="pcm_repo/$PCM_INPUT"
+          else
+            # Auto-detect first *.arxml in pcm_repo/files
+            echo "pcm_arxml_path not provided; auto-detecting in pcm_repo/files/*.arxml"
+            mapfile -t matches < <(find pcm_repo/files -maxdepth 1 -type f -name '*.arxml' | sort)
+            if [ "${#matches[@]}" -eq 0 ]; then
+              echo "ERROR: No .arxml files found in pcm_repo/files/" >&2
+              ls -la pcm_repo/files || true
+              exit 1
+            fi
+            if [ "${#matches[@]}" -gt 1 ]; then
+              echo "WARNING: Multiple .arxml files found; using the first one:" >&2
+              printf ' - %s\n' "${matches[@]}" >&2
+            fi
+            PCM_ARXML="${matches[0]}"
+          fi
+
+          echo "This repo ARXML: $THIS_ARXML"
+          echo "PCM repo ARXML:  $PCM_ARXML"
+          echo "Output HTML:     $OUT_HTML"
+
+          # Validate inputs exist
+          [ -f "$THIS_ARXML" ] || { echo "ERROR: Not found in this repo: $THIS_ARXML" >&2; exit 1; }
+          [ -f "$PCM_ARXML" ]  || { echo "ERROR: Not found in PCM repo: $PCM_ARXML" >&2; ls -la "$(dirname "$PCM_ARXML")" || true; exit 1; }
+
+          # Run your diff script
+          python "./scripts/arxml_diff/xml_diff.py" "$THIS_ARXML" "$PCM_ARXML" "$OUT_HTML"
+
+          echo "Diff generated at $OUT_HTML"
+          ls -la diff-reports
+
+      # 6) Upload artifact
+      - name: Upload diff artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: arxml-diff-with-pcm
+          path: diff-reports/**
+          retention-days: ${{ inputs.retention_days }}
