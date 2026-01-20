@@ -46,7 +46,7 @@ jobs:
           repository: CICD-LTTS/BASE_REPO
           ref: main
           path: base-pcm-repo
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GT_PAT }}
 
 
       # 3) Python setup
