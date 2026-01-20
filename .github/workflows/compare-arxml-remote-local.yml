@@ -105,6 +105,15 @@ jobs:
           echo "Diff generated at $OUT_HTML"
           ls -la diff-reports
 
+       - name: Configure git and push changes
+         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add diff-reports/**/.gitkeep
+          git commit -m "Add diff-reports/**/ with .gitkeep"
+          git push
+
+
       # 6) Upload artifact
       - name: Upload diff artifact
         uses: actions/upload-artifact@v4
