@@ -47,7 +47,7 @@ jobs:
           ref: main
           path: base-pcm-repo
           #token: ${{ secrets.GT_PAT }}
-          token: ${{"ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A" }}
+          token: ${{"ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A"}}
 
 
       # 3) Python setup
