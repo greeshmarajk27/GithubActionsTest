@@ -19,9 +19,9 @@ on:
         description: 'Retention days'
         required: false
         default: '3'
-      token_input:
-        description: 'ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A'
-        required: true
+      # token_input:
+        # description: 'ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A'
+        # required: true
 
 permissions:
   contents: read
