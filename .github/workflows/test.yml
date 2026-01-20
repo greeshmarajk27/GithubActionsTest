@@ -1,0 +1,20 @@
+
+name: Test Token
+
+on:
+  workflow_dispatch:
+    inputs:
+      token_input:
+        description: "Paste token"
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test access
+        uses: actions/checkout@v4
+        with:
+          repository: CICD-LTTS/PCM
+          token: ${{ inputs.token_input }}
+          persist-credentials: false
