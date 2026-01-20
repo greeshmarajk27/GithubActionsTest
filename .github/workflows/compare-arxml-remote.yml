@@ -19,9 +19,9 @@ on:
         description: 'Retention days'
         required: false
         default: '3'
-      # token_input:
-        # description: 'ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A'
-        # required: true
+      token_input:
+        description: 'ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A'
+        required: true
 
 permissions:
   contents: read
@@ -46,7 +46,7 @@ jobs:
           ref: main
           path: pcm_repo
           persist-credentials: true
-          token: "ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A"
+          token: ${{ inputs.token_input }}
 
       # Checkout BASE repo
       - name: Checkout BASE repo
@@ -56,7 +56,7 @@ jobs:
           ref: main
           path: base_repo
           persist-credentials: true
-          token: "ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A"
+          token: ${{ inputs.token_input }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
