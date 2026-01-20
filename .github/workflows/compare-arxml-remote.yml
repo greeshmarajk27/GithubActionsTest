@@ -93,4 +93,3 @@ jobs:
           name: arxml-diff
           path: diff-reports/**
           retention-days: ${{ inputs.retention_days }}
-``
