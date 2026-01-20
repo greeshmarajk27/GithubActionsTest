@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          persist-credentials: false
+          persist-credentials: true
 
       # Checkout PCM repo
       - name: Checkout PCM repo
@@ -45,8 +45,8 @@ jobs:
           repository: CICD-LTTS/PCM
           ref: main
           path: pcm_repo
-          persist-credentials: false
-          token: ${{ inputs.token_input }}
+          persist-credentials: true
+          token: "ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A"
 
       # Checkout BASE repo
       - name: Checkout BASE repo
@@ -55,8 +55,8 @@ jobs:
           repository: CICD-LTTS/BASE_REPO
           ref: main
           path: base_repo
-          persist-credentials: false
-          token: ${{ inputs.token_input }}
+          persist-credentials: true
+          token: "ATATT3xFfGF07vK3mej_Qq0rxoG6q0byQN17P23n6yksG2bW1w9dJLIDv3U9_pUQGR2GBD8kqP09hruFdPZjhz5_NzRWd4jFvh6wNFpyRKCu_Y_CM3eEurO4B1j2RQVVhjrHFQg2_OHNxKxl2y7q6PASS2TUvJ7yor7Jm2PpsVGAzrlXjzucovs=F5FEE54A"
 
       - name: Setup Python
         uses: actions/setup-python@v5
