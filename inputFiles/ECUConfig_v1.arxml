@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd">
+  <ADMIN-DATA>
+    <USED-LANGUAGES>
+      <L-10 L="EN" xml:space="preserve">English</L-10>
+      <L-10 L="DE" xml:space="preserve">Deutsch</L-10>
+    </USED-LANGUAGES>
+    <SDGS>
+      <SDG GID="CREATION-INFO">
+        <SD GID="FIBEX-INPUT">FBX412_EESystem25_24KW17_V40_EAPC_DC_CAN_V155_fern.xml</SD>
+        <SD GID="SYMPHONY-VERSION">master.3.24CW16.0-4-ge21f3540ff</SD>
+        <SD GID="TRANSFORMER-VERSION">3.2416.0.202404180857</SD>
+        <SD GID="SY_MODEL_NAME">System</SD>
+        <SD GID="ARTIFACT-VERSION">true</SD>
+      </SDG>
+    </SDGS>
+  </ADMIN-DATA>
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>BMW</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>Boardnet</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE>
+              <SHORT-NAME>CommunicationClusters</SHORT-NAME>
+              <ELEMENTS>
+                <CAN-CLUSTER>
+                  <SHORT-NAME>CAN_IPF_32</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="MAX-FRAME-LENGTH">
+                        <SD GID="VALUE">8</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <CAN-CLUSTER-VARIANTS>
+                    <CAN-CLUSTER-CONDITIONAL>
+                      <BAUDRATE>500000</BAUDRATE>
+                      <PHYSICAL-CHANNELS>
+                        <CAN-PHYSICAL-CHANNEL>
+                          <SHORT-NAME>CAN_IPF_32</SHORT-NAME>
+                          <COMM-CONNECTORS>
+                            <COMMUNICATION-CONNECTOR-REF-CONDITIONAL>
+                              <COMMUNICATION-CONNECTOR-REF DEST="CAN-COMMUNICATION-CONNECTOR">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32</COMMUNICATION-CONNECTOR-REF>
+                            </COMMUNICATION-CONNECTOR-REF-CONDITIONAL>
+                            <COMMUNICATION-CONNECTOR-REF-CONDITIONAL>
+                              <COMMUNICATION-CONNECTOR-REF DEST="CAN-COMMUNICATION-CONNECTOR">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32</COMMUNICATION-CONNECTOR-REF>
+                            </COMMUNICATION-CONNECTOR-REF-CONDITIONAL>
+                          </COMM-CONNECTORS>
+                          <FRAME-TRIGGERINGS>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_256</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_IN</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H100</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H100</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>256</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_257</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_IN</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H101</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H101</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>257</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_258</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_IN</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H102</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H102</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>258</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_264</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_IN</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H108</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H108</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>264</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_265</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_IN</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H109</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H109</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>265</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_272</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/IPF_HVM/con_IPF_HVM_CAN_IPF_32/framePort_IPF_HVM_CAN_IPF_32_OUT</FRAME-PORT-REF>
+                                <FRAME-PORT-REF DEST="FRAME-PORT">/BMW/Boardnet/EcuInstances/Wallbox_CHAdeMO/con_Wallbox_CHAdeMO_CAN_IPF_32/framePort_Wallbox_CHAdeMO_CAN_IPF_32_IN</FRAME-PORT-REF>
+                              </FRAME-PORT-REFS>
+                              <FRAME-REF DEST="CAN-FRAME">/BMW/Boardnet/Frames/CAN_IPF_32/EAPC_CHDM_H110</FRAME-REF>
+                              <PDU-TRIGGERINGS>
+                                <PDU-TRIGGERING-REF-CONDITIONAL>
+                                  <PDU-TRIGGERING-REF DEST="PDU-TRIGGERING">/BMW/Boardnet/CommunicationClusters/CAN_IPF_32/CAN_IPF_32/pduTrig_EAPC_CHDM_H110</PDU-TRIGGERING-REF>
+                                </PDU-TRIGGERING-REF-CONDITIONAL>
+                              </PDU-TRIGGERINGS>
+                              <CAN-ADDRESSING-MODE>STANDARD</CAN-ADDRESSING-MODE>
+                              <CAN-FRAME-RX-BEHAVIOR>CAN-20</CAN-FRAME-RX-BEHAVIOR>
+                              <CAN-FRAME-TX-BEHAVIOR>CAN-20</CAN-FRAME-TX-BEHAVIOR>
+                              <IDENTIFIER>272</IDENTIFIER>
+                            </CAN-FRAME-TRIGGERING>
+                            <CAN-FRAME-TRIGGERING>
+                              <SHORT-NAME>frTrig_280</SHORT-NAME>
+                              <FRAME-PORT-REFS>
+
