@@ -1,14 +1,16 @@
 name: Run JAR in CI
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -16,5 +18,16 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
 
-      - name: Find the JAR file and run it
-        run: java -jar jar/arxmldiff.jar 
+      - name: Run JAR and capture output
+        run: |
+          mkdir -p output
+          # Run the JAR and save console output
+          java -jar jar/arxmldiff.jar > output/result.txt
+          # Copy everything generated (except .git) into output folder
+          rsync -av --exclude='.git' ./ output/
+
+      - name: Upload all outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-output
+          path: output/
