@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir -p output
           # Run the JAR and save console output
-          java -jar jar/arxmlDiffjar.jar "files/BusDescription_main.arxml" "files/BusDescription_1.arxml" "files" > output/result.txt
+          java -jar jar/arxmlDiffjar.jar "files/BusDescription_main.arxml" "files/BusDescription_1.arxml" "output.xlsx" > output/result.txt
           # Copy everything generated (except .git) into output folder
           rsync -av --exclude='.git' ./ output/
 
