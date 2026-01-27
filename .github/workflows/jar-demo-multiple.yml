@@ -1,0 +1,46 @@
+name: Run JAR in CI
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Run JAR and capture output
+        run: |
+          mkdir -p output
+          # Run the JAR and save console output
+          java -jar jar/arxmlDiffjarMulti.jar "inputFiles" "files" "multipleArxml.xlsx" > output/result.txt
+          # Copy everything generated (except .git) into output folder
+          rsync -av --exclude='.git' ./ output/
+
+      - name: Upload all outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-output
+          path: output/
+          
+      - name: Copy Excel into folder
+        run: |
+          mkdir -p data/excel
+          cp multipleArxml.xlsx data/excel/
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/excel/report.xlsx
+          git commit -m "Add/update Excel report"
+          git push
