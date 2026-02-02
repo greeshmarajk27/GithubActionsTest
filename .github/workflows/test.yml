@@ -10,17 +10,26 @@ jobs:
       contents: write
 
     steps:
+    
+    
+      - name: Delete branch if exists
+        shell: bash       
+          # Delete remote 'develop' if exists
+          if git ls-remote --heads origin "preint-main" >/dev/null 2>&1 && \
+             [ -n "$(git ls-remote --heads origin "preint-main" ]; then
+            git push origin --delete "preint-main" || true
+          fi
+    
       - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
 
       - run: |
-          git checkout -b auto/new-branch
-          git push origin auto/new-branch
+          git checkout -b preint-main
+          git push origin preint-main
           
       - name: Checkout ECM (ecm_new_feature)
-        if: ${{ inputs.sync_ecm }}
         uses: actions/checkout@v4
         with:
           repository: CICD-LTTS/ECM
@@ -50,8 +59,8 @@ jobs:
       # Step 2: Copy files
       - name: Copy files
         run: |
-          mkdir -p ECM/files
-          cp -r ECM/files ECM/files
+          mkdir -p ECM_REPO/files
+          cp -r ECM/files ECM_REPO/files
 
       # Step 3: Create PR automatically
       - name: Create Pull Request
