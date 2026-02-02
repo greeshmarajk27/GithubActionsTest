@@ -26,7 +26,7 @@ jobs:
           ref: ecm_new_feature
           path: _external/ECM
           fetch-depth: 1
-          token: ${{ secrets.GT_PAT }}
+          token: ${{ secrets.ALL_REPOS_PAT }}
           sparse-checkout: |
             files
           sparse-checkout-cone-mode: true
