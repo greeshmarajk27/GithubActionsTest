@@ -1,17 +1,65 @@
-name: Build
+name: Create branch from main
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  create-branch:
     runs-on: ubuntu-latest
-    steps:
-      - name: Build stuff
-        run: echo "Build done"
+    permissions:
+      contents: write
 
-      - name: Add button link to summary
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - run: |
+          git checkout -b auto/new-branch
+          git push origin auto/new-branch
+          
+      - name: Checkout ECM (ecm_new_feature)
+        if: ${{ inputs.sync_ecm }}
+        uses: actions/checkout@v4
+        with:
+          repository: CICD-LTTS/ECM
+          ref: ecm_new_feature
+          path: _external/ECM
+          fetch-depth: 1
+          token: ${{ secrets.CROSS_REPO_PAT }}
+          sparse-checkout: |
+            files
+          sparse-checkout-cone-mode: true
+          
+      - name: Sync files from ECM
+        shell: bash
         run: |
-          echo "## ✅ Build Complete" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[➡ Copy files to repo](https://github.com/${{ github.repository }}/actions/workflows/copy-files.yml)" >> $GITHUB_STEP_SUMMARY
+          set -euo pipefail
+          # Create destination folders with updated names
+          mkdir -p ECM/files PCM/files HVAC_SVN/files BCM_SHAREPOINT/files ABS_JIRA/files
+          
+          if [ -d "_external/ECM/files" ]; then
+            echo "Syncing _external/ECM/files -> ECM/files"
+            rsync -av --delete "_external/ECM/files/" "ECM/files/"
+          else
+            echo "ECM/files not found on branch ecm_new_feature; skipping."
+          fi
+
+
+      # Step 2: Copy files
+      - name: Copy files
+        run: |
+          mkdir -p ECM/files
+          cp -r ECM/files ECM/files
+
+      # Step 3: Create PR automatically
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto/copy-files
+          commit-message: "chore: copy files"
+          title: "Automated copy of files"
+          body: |
+            This PR was created automatically by GitHub Actions.
+          delete-branch: true
