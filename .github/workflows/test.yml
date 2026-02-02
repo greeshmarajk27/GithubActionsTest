@@ -36,7 +36,7 @@ jobs:
         run: |
           set -euo pipefail
           # Create destination folders with updated names
-          mkdir -p ECM/files PCM/files HVAC_SVN/files BCM_SHAREPOINT/files ABS_JIRA/files
+          mkdir -p ECM/files
           
           if [ -d "_external/ECM/files" ]; then
             echo "Syncing _external/ECM/files -> ECM/files"
@@ -56,7 +56,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: auto/copy-files
+          branch: preint-main
           commit-message: "chore: copy files"
           title: "Automated copy of files"
           body: |
