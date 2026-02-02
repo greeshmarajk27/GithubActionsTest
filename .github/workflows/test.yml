@@ -9,15 +9,7 @@ jobs:
     permissions:
       contents: write
 
-    steps:   
-      - name: Delete branch if exists
-        shell: bash       
-          # Delete remote 'develop' if exists
-          if git ls-remote --heads origin "preint-main" >/dev/null 2>&1 && \
-             [ -n "$(git ls-remote --heads origin "preint-main" ]; then
-            git push origin --delete "preint-main" || true
-          fi
-    
+    steps:    
       - uses: actions/checkout@v4
         with:
           ref: main
