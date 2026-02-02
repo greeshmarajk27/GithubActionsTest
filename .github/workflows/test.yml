@@ -9,9 +9,7 @@ jobs:
     permissions:
       contents: write
 
-    steps:
-    
-    
+    steps:   
       - name: Delete branch if exists
         shell: bash       
           # Delete remote 'develop' if exists
