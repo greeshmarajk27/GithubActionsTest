@@ -1,20 +1,17 @@
-
-name: Test Token
+name: Build
 
 on:
-  workflow_dispatch:
-    inputs:
-      token_input:
-        description: "Paste token"
-        required: true
+  push:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Test access
-        uses: actions/checkout@v4
-        with:
-          repository: CICD-LTTS/PCM
-          token: ${{ inputs.token_input }}
-          persist-credentials: false
+      - name: Build stuff
+        run: echo "Build done"
+
+      - name: Add button link to summary
+        run: |
+          echo "## ✅ Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[➡ Copy files to repo](https://github.com/${{ github.repository }}/actions/workflows/copy-files.yml)" >> $GITHUB_STEP_SUMMARY
