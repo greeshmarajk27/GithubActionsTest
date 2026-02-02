@@ -30,35 +30,23 @@ jobs:
           sparse-checkout: |
             files
           sparse-checkout-cone-mode: true
-          
-      - name: Sync files from ECM
-        shell: bash
-        run: |
-          set -euo pipefail
-          # Create destination folders with updated names
-          mkdir -p ECM/files
-          
-          if [ -d "_external/ECM/files" ]; then
-            echo "Syncing _external/ECM/files -> ECM/files"
-            rsync -av --delete "_external/ECM/files/" "ECM/files/"
-          else
-            echo "ECM/files not found on branch ecm_new_feature; skipping."
-          fi
 
 
       # Step 2: Copy files
       - name: Copy files
         run: |
-          mkdir -p ECM_REPO/files
-          cp -r ECM/files ECM_REPO/files
+          mkdir -p preint-main/ECM/files
+          cp -r ECM/files preint-main/ECM/files
+          git add preint-main/ECM/files
+          git commit -m "Copy file.txt to destination folder" || echo "No changes to commit"
+          git push origin HEAD:copy-file-pr-branch --force
 
-      # Step 3: Create PR automatically
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v5
         with:
-          branch: preint-main
-          commit-message: "chore: copy files"
-          title: "Automated copy of files"
-          body: |
-            This PR was created automatically by GitHub Actions.
-          delete-branch: true
+          token: ${{ secrets.ALL_REPOS_PAT }}
+          commit-message: "Copy file to destination"
+          branch: ${{ steps.create-branch.outputs.PR_BRANCH }} # optional dynamic branch
+          base: preint-main   # target branch
+          title: "Automatic PR to preint-main"
+          body: "This PR was automatically created by GitHub Actions."
