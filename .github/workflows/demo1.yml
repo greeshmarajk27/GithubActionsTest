@@ -1,36 +1,25 @@
-name: Approval listener
+name: Start workflow
 
 on:
-  issue_comment:
-    types: [created]
+  workflow_dispatch:
 
 jobs:
-  check-approval:
+  start:
     runs-on: ubuntu-latest
-    if: >
-      github.event.comment.body == '/approve'
     steps:
-      - name: Verify commenter permission
+      - run: echo "Workflow started"
+
+      - name: Create approval issue
         uses: actions/github-script@v7
         with:
           script: |
-            const perm = await github.rest.repos.getCollaboratorPermissionLevel({
+            const runId = "123";
+
+            const issue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              username: context.payload.comment.user.login
+              title: "Approval required",
+              body: `Comment \`/approve\` to continue.\n\nRun ID: ${runId}`
             });
 
-            if (!['admin', 'write'].includes(perm.data.permission)) {
-              core.setFailed("User not authorized to approve.");
-            }
-
-      - name: Trigger continuation workflow
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: "continue.yml",
-              ref: "main"
-            });
+            core.setOutput("issue_number", issue.data.number);
