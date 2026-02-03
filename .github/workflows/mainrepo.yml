@@ -1,0 +1,52 @@
+name: Main Workflow (Macro Controlled)
+
+on:
+  push:
+    branches: ["*"]  # runs automatically on any push
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate ARXML
+    runs-on: ubuntu-latest
+    outputs:
+      run_pr: ${{ steps.read_macro.outputs.run_pr }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Validation Script
+        run: python scripts/arxml_validator.py
+
+      - name: Upload CSV Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arxml-validation-report
+          path: report.csv
+
+      - name: Read Macro from JSON
+        id: read_macro
+        run: |
+          RUN_PR=$(jq -r '.run_pr_workflow' workflow_config.json)
+          echo "run_pr=$RUN_PR" >> $GITHUB_OUTPUT
+
+  trigger_pr:
+    name: Trigger PR Workflow
+    runs-on: ubuntu-latest
+    needs: validate
+    if: ${{ needs.validate.outputs.run_pr == 'true' }}   # ✅ Controlled by JSON
+    steps:
+      - name: Trigger PR Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: pr.yml
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          inputs: |
+            pr_triggered: "true"
