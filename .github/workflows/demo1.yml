@@ -1,25 +1,19 @@
-name: Start workflow
+name: Manual Notification Trigger
 
 on:
   workflow_dispatch:
+    inputs:
+      message:
+        description: "Notification message"
+        required: true
+        default: "Button clicked 🚀"
 
 jobs:
-  start:
+  notify:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Workflow started"
-
-      - name: Create approval issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const runId = "123";
-
-            const issue = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "Approval required",
-              body: `Comment \`/approve\` to continue.\n\nRun ID: ${runId}`
-            });
-
-            core.setOutput("issue_number", issue.data.number);
+      - name: Print notification
+        run: |
+          echo "🔔 Notification:"
+          echo "${{ github.event.inputs.message }}"
