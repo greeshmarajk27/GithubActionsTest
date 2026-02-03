@@ -1,0 +1,19 @@
+<AUTOSAR>
+    <MM-MODES>
+        <MM-MODE>
+            <SHORT-NAME>STARTUP</SHORT-NAME>
+            <MM-MODE-ID>1</MM-MODE-ID>
+        </MM-MODE>
+        <MM-MODE>
+            <SHORT-NAME>RUNNING</SHORT-NAME>
+            <MM-MODE-ID>2</MM-MODE-ID>
+        </MM-MODE>
+    </MM-MODES>
+
+    <MM-MODE-TRANSITIONS>
+        <MM-MODE-TRANSITION>
+            <MM-SOURCE-MODE>STARTUP</MM-SOURCE-MODE>
+            <MM-TARGET-MODE>RUNNING</MM-TARGET-MODE>
+        </MM-MODE-TRANSITION>
+    </MM-MODE-TRANSITIONS>
+</AUTOSAR>

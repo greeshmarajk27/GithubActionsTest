@@ -1,0 +1,26 @@
+{
+  "rules": [
+    {
+      "rule_id": "EM_01",
+      "description": "EM startup configuration must exist",
+      "xpath": "//EM-STARTUP-CONFIGURATION",
+      "condition": "EXISTS",
+      "mandatory": true
+    },
+    {
+      "rule_id": "EM_02",
+      "description": "EM startup timeout must be 5000",
+      "xpath": "//EM-STARTUP-TIMEOUT",
+      "condition": "EQUALS",
+      "expected": "5000",
+      "mandatory": true
+    },
+    {
+      "rule_id": "MM_01",
+      "description": "At least one MM mode must exist",
+      "xpath": "//MM-MODE",
+      "condition": "EXISTS",
+      "mandatory": true
+    }
+  ]
+}
