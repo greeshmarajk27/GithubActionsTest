@@ -1,19 +1,23 @@
-name: Manual Notification Trigger
+name: Build and Notify
 
 on:
-  workflow_dispatch:
-    inputs:
-      message:
-        description: "Notification message"
-        required: true
-        default: "Button clicked 🚀"
+  push:
+    branches: [main]
 
 jobs:
-  notify:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print notification
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run build
         run: |
-          echo "🔔 Notification:"
-          echo "${{ github.event.inputs.message }}"
+          echo "Running build..."
+          exit 0
+
+      - name: Notify result
+        if: always()
+        run: |
+          echo "Workflow finished with status: ${{ job.status }}"
