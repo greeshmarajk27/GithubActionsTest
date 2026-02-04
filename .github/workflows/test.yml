@@ -44,8 +44,8 @@ jobs:
       # Step 2: Copy files
       - name: Copy files
         run: |
-          mkdir -p preint-main/
-          cp -r _external/ECM/files preint-main/
+          mkdir -p ECM/files
+          cp -r _external/ECM/files ECM/files
           rm -rf preint-main/.git
           git add .
           git commit -m "Copy to destination folder" || echo "No changes to commit"
