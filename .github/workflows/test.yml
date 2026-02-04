@@ -43,7 +43,9 @@ jobs:
       # Copy files
       - name: Copy folder
         run: |
-          rsync -av --delete _external/ECM/files ECM/files
+          mkdir -p ECM/
+          rsync -av --delete _external/ECM/files ECM/
+          rm -rf _external/ECM
       # Step 2: Copy files
       - name: Copy files
         run: |
