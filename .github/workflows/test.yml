@@ -40,13 +40,13 @@ jobs:
             files
           sparse-checkout-cone-mode: true
 
-
+      # Copy files
+      - name: Copy folder
+        run: |
+          rsync -av --delete _external/ECM/files ECM/files
       # Step 2: Copy files
       - name: Copy files
         run: |
-          mkdir -p ECM/files
-          cp -r _external/ECM/files ECM/files
-          rm -rf preint-main/.git
           git add .
           git commit -m "Copy to destination folder" || echo "No changes to commit"
           git push origin preint-main
