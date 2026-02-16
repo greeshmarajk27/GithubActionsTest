@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "Read Inputs from Confluence"
 
   # Block 2: Test (depends on Confluence_Input)
@@ -18,7 +18,7 @@ jobs:
     needs: Confluence_Input
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "Find ARXML Difference"
 
   # Block 3: Deploy (depends on test)
@@ -27,7 +27,7 @@ jobs:
     needs: ARXML_difference
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "Config check"
   # Block 3: Deploy (depends on test)
   Integration_check:
@@ -35,7 +35,7 @@ jobs:
     needs: Config_check
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "Integration_check"
   # Block 3: Deploy (depends on test)
   Apply_cahnges_To_Feature_Branch:
@@ -43,7 +43,7 @@ jobs:
     needs: Integration_check
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "Apply_cahnges_To_Feature_Branch"
   # Block 3: Deploy (depends on test)
   verify_Diff_Application:
@@ -51,5 +51,5 @@ jobs:
     needs: Apply_cahnges_To_Feature_Branch
     steps:
       - name: Checkout code
-        run: |
+        run:
         echo "verify_Diff_Application"
