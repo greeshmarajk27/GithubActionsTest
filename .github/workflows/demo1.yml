@@ -4,52 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Block 1: Build
-  build:
+  # Block 1: Confluence_Input
+  Confluence_Input:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-  # Block 2: Test (depends on build)
-  test:
+  # Block 2: Test (depends on Confluence_Input)
+  ARXML_difference:
     runs-on: ubuntu-latest
-    needs: build
+    needs: Confluence_Input
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
 
   # Block 3: Deploy (depends on test)
-  deploy:
+  Config_check:
     runs-on: ubuntu-latest
-    needs: test
+    needs: ARXML_difference
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Deploy application
-        run: |
-          echo "Deploying application..."
-          npm run deploy
