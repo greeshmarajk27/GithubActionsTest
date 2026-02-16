@@ -1,17 +1,55 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - name: Get current date
-      set_fact:
-        today: "{{ now(fmt='%Y-%m-%d') | to_datetime('%Y-%m-%d') }}"
+name: Run blocks
 
-    - name: Calculate start of week (Monday)
-      set_fact:
-        week_start: "{{ (today - ((today.strftime('%w') | int - 1) | int) | community.general.to_datetime('%Y-%m-%d')) }}"
+on:
+  workflow_dispatch:
 
-    - name: Calculate end of week (Sunday)
-      set_fact:
-        week_end: "{{ (week_start + 6) }}"
+jobs:
+  # Block 1: Build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - debug:
-        msg: "Week starts on {{ week_start.strftime('%Y-%m-%d') }} and ends on {{ week_end.strftime('%Y-%m-%d') }}"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+  # Block 2: Test (depends on build)
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  # Block 3: Deploy (depends on test)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy application
+        run: |
+          echo "Deploying application..."
+          npm run deploy
