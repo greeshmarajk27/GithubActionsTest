@@ -5,26 +5,26 @@ on:
 
 jobs:
   # Block 1: Confluence_Input
-- name: Calculate current week start and end (Mon-Sun)
-  hosts: localhost
-  gather_facts: yes
   tasks:
-    - name: Get today's date as datetime
-      set_fact:
-        today: "{{ ansible_date_time.date | to_datetime('%Y-%m-%d') }}"
+    runs-on: ubuntu-latest
 
-    - name: Get weekday number (Mon=1..Sun=7)
-      set_fact:
-        weekday: "{{ today | strftime('%u') | int }}"
+    steps:
+      - name: Get today's date as datetime
+        set_fact:
+          today: "{{ ansible_date_time.date | to_datetime('%Y-%m-%d') }}"
 
-    - name: Calculate start of week (Monday)
-      set_fact:
-        week_start: "{{ (today - (weekday - 1)) | strftime('%Y-%m-%d') }}"
+      - name: Get weekday number (Mon=1..Sun=7)
+        set_fact:
+          weekday: "{{ today | strftime('%u') | int }}"
 
-    - name: Calculate end of week (Sunday)
-      set_fact:
-        week_end: "{{ (today - (weekday - 1) + 6) | strftime('%Y-%m-%d') }}"
+      - name: Calculate start of week (Monday)
+        set_fact:
+          week_start: "{{ (today - (weekday - 1)) | strftime('%Y-%m-%d') }}"
 
-    - name: Show week range
-      debug:
-        msg: "Week starts on {{ week_start }} and ends on {{ week_end }}"
+      - name: Calculate end of week (Sunday)
+        set_fact:
+          week_end: "{{ (today - (weekday - 1) + 6) | strftime('%Y-%m-%d') }}"
+
+      - name: Show week range
+        debug:
+          msg: "Week starts on {{ week_start }} and ends on {{ week_end }}"
