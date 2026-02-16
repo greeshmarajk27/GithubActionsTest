@@ -47,3 +47,15 @@ jobs:
     steps:
       - name: Checkout code
         run: echo "verify_Diff_Application"
+  Run_generate:
+    runs-on: ubuntu-latest
+    needs: verify_Diff_Application
+    steps:
+      - name: Checkout code
+        run: echo "Run_generate"
+  create_PR:
+    runs-on: ubuntu-latest
+    needs: Run_generate
+    steps:
+      - name: Checkout code
+        run: echo "create_PR"
