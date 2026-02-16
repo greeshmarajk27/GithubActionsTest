@@ -1,23 +1,17 @@
-name: Build and Notify
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get current date
+      set_fact:
+        today: "{{ now(fmt='%Y-%m-%d') | to_datetime('%Y-%m-%d') }}"
 
-on:
-  push:
-    branches: [main]
+    - name: Calculate start of week (Monday)
+      set_fact:
+        week_start: "{{ (today - ((today.strftime('%w') | int - 1) | int) | community.general.to_datetime('%Y-%m-%d')) }}"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    - name: Calculate end of week (Sunday)
+      set_fact:
+        week_end: "{{ (week_start + 6) }}"
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run build
-        run: |
-          echo "Running build..."
-          exit 0
-
-      - name: Notify result
-        if: always()
-        run: |
-          echo "Workflow finished with status: ${{ job.status }}"
+    - debug:
+        msg: "Week starts on {{ week_start.strftime('%Y-%m-%d') }} and ends on {{ week_end.strftime('%Y-%m-%d') }}"
